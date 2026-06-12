@@ -1,3 +1,6 @@
+## History:
+   6/12/26 - ssandrew - Added to git as: https://github.com/ssandrew1/3dlifestrategies-mail-server
+
 - Changed to use: server.js with route/contact.js and auth.js
 - NEEDED: npm install bcryptjs jsonwebtoken - to build token validated
           beta/login.html and beta/secret.html
@@ -11,12 +14,7 @@ NEXT: DID THIS, FOR DYNAMIC SIGN-UP - where we email a pw
  npm install sqlite3 sqlite
  Create a new file in your root folder called database.js
 
-
-
-
-
 Yes, PM2 is exactly what you need! Here's the full setup:
-
 
 Install & Start with PM2
 bash
