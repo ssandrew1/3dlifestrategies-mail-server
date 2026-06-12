@@ -1,0 +1,52 @@
+const express = require('express');
+const nodemailer = require('nodemailer');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(cors()); // Allows your web server to talk to this script
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// SMTP Configuration
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // Use TLS
+    auth: {        
+        user: 'steve.andrew@3dlifestrategies.org', 
+        pass: 'ajqenueirlzjpvdc'        
+    }
+});
+
+// OLD app.post('/send-inquiry', (req, res) => {
+app.post('/api/send-inquiry', (req, res) => {
+	
+    console.log(`In: api/send-inquiry {req.body} `);
+    const { firstName, lastName, email, subject, message } = req.body;
+    console.log(` - email: ${email}, ${firstName} ${lastName} subject: ${subject}, ${message} `);
+
+    const mailOptions = {
+        from: `"Website Contact" <support@3dlifestrategies.org>`,
+        to: 'support@3dlifestrategies.org,steven.scott.andrew@gmail.com',   // Where you want to receive the mail
+        subject: `Website Inquiry: ${subject} from: ${email}`,
+        text: `Subject: ${subject}\nFrom: ${email}\nName: ${firstName} ${lastName}\nMessage: ${message}`,
+        replyTo: email // So you can hit 'Reply' directly to the customer
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send("Error sending mail.");
+        }
+        res.status(200).send("Inquiry sent successfully!");
+    });
+});
+
+// CRITICAL: Listen on 127.0.0.1 (localhost) only
+app.listen(PORT, '127.0.0.1', () => {
+    console.log(`Mail server running internally on http://127.0.0.1:${PORT}`);
+});

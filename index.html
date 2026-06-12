@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Life Strategies | Transform Passive Knowledge into Vocational Action</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --accent: #c5a47e;
+            --bg: #f9f8f6;
+            --3d-blue: #2563eb;
+            --3d-purple: #7c3aed;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--primary);
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1a1a1a 0%, #c5a47e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .step-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        .ai-badge {
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 99px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#f9f8f6]/80 backdrop-blur-md border-b border-black/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2"><img width="30" height="30" src="data:image/png;base64,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" alt="Small Image">
+                <span class="text-2xl font-bold tracking-tighter serif"> 3D <span class="text-[#c5a47e]">Life Strategies</span></span>            
+
+            
+            </div>
+            <div class="hidden md:flex gap-10 text-sm tracking-widest uppercase font-medium items-center">                
+                <a href="#dimensions" class="hover:text-[#c5a47e] transition-colors">Dimensions</a>
+                <a href="#process" class="hover:text-[#c5a47e] transition-colors">The Process</a>
+                <a href="#ai-integration" class="hover:text-[#c5a47e] transition-colors">AI</a>
+                <a href="#contact" class="hover:text-[#c5a47e] transition-colors">Contact</a>
+                <a href="way_page.html" class="px-4 py-2 bg-black text-white hover:bg-[#c5a47e] transition-all rounded-sm">Secure Your Playbook</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="reveal active">
+                <span class="inline-block px-3 py-1 bg-[#c5a47e]/10 text-[#c5a47e] text-xs font-bold tracking-[0.2em] uppercase mb-6">Discovery • Decision • Development</span>
+                <!-- <h1 class="text-6xl md:text-8xl leading-[1.1] mb-8"> -->
+                <h1 class="text-5xl md:text-7xl leading-[1.1] mb-8">
+                    Your Design is the <span class="italic">Blueprint.</span><br>
+                    Your Action is the <span class="text-[#c5a47e]">Building.</span>
+                </h1>
+                <p class="text-lg text-gray-600 mb-10 max-w-lg leading-relaxed">
+                    Most development programs focus on a single area. We integrate <span class="font-semibold">Body, Mind, and Spirit</span> into a strategic framework that moves you from passive knowledge to vocational action.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="way_page.html" class="px-8 py-4 bg-black text-white text-center hover:bg-gray-800 transition-all font-medium">Start Discovering</a>
+                    <a href="#process" class="px-8 py-4 border border-black text-center hover:bg-black hover:text-white transition-all font-medium">The 3D Process</a>
+                </div>
+            </div>
+            <div class="relative reveal active" style="transition-delay: 200ms;">
+                <div class="aspect-[4/5] bg-gray-200 overflow-hidden rounded-sm shadow-2xl">                    
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" alt="Life Coach" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <!-- Floating Card -->
+                <div class="absolute -bottom-10 -left-10 bg-white p-8 shadow-xl max-w-xs hidden lg:block border-l-4 border-[#c5a47e]">
+                    <p class="serif italic text-xl mb-2">"Faith without works is dead."</p>
+                    <p class="text-xs text-gray-400 uppercase tracking-widest">James 2:26</p>
+                </div>
+            </div>
+        </div>
+        <!-- Background Elements -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#c5a47e]/5 to-transparent -z-10"></div>
+    </header>
+
+    <!-- The 3 Dimensions -->
+    <section id="dimensions" class="py-24 bg-[#1a1a1a] text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="reveal">
+                    <h2 class="text-5xl mb-10">Holistic Stewardship</h2>
+                    <p class="text-gray-400 mb-12 text-lg leading-relaxed">
+                        A healthy body supports a sharp mind, and a clear mind creates the space for a resilient spirit. We believe true maturity is the ROI of your stewardship in these three areas.
+                    </p>
+                    
+                    <div class="space-y-10">
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 flex-shrink-0 bg-[#c5a47e] rounded-full flex items-center justify-center font-bold">B</div>
+                            <div>
+                                <h4 class="text-xl mb-2">The Body (The Vessel)</h4>
+                                <p class="text-gray-400 text-sm">Managing physical energy, health, and limitations to ensure you have the stamina for your calling.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 flex-shrink-0 bg-[#c5a47e] rounded-full flex items-center justify-center font-bold">M</div>
+                            <div>
+                                <h4 class="text-xl mb-2">The Mind (The Cognitive Center)</h4>
+                                <p class="text-gray-400 text-sm">Combatting the "Expert's Curse" and lifelong learning to refine your technical and emotional intelligence.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 flex-shrink-0 bg-[#c5a47e] rounded-full flex items-center justify-center font-bold">S</div>
+                            <div>
+                                <h4 class="text-xl mb-2">The Spirit (The Core)</h4>
+                                <p class="text-gray-400 text-sm">Aligning your natural skills with divine purpose to edify the community and glorify the Creator.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative reveal" style="transition-delay: 200ms;">
+                    <div class="aspect-square rounded-full border border-white/10 flex items-center justify-center p-12">
+                        <div class="w-full h-full rounded-full border-2 border-[#c5a47e]/30 flex items-center justify-center animate-[spin_20s_linear_infinite]">
+                            <div class="absolute -top-4 bg-[#1a1a1a] px-4 font-bold text-[#c5a47e]">SPIRIT</div>
+                            <div class="absolute -bottom-4 bg-[#1a1a1a] px-4 font-bold text-[#c5a47e]">MIND</div>
+                            <div class="absolute -right-4 bg-[#1a1a1a] px-4 py-2 rotate-90 font-bold text-[#c5a47e]">BODY</div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center">
+                                <span class="block text-4xl font-serif italic mb-2">3D</span>
+                                <span class="text-[10px] uppercase tracking-[0.3em] opacity-50">Integration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- The 3D Process Section -->
+    <section id="process" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl mb-6">A Rich 3D Framework</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto">Our roadmap takes you from initial discovery to a lifelong rhythm of development.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="step-card p-10 border border-gray-100 bg-[#f9f8f6] reveal" style="transition-delay: 100ms;">
+                    <span class="text-6xl font-serif text-[#c5a47e]/20 mb-6 block font-bold italic">01</span>
+                    <h3 class="text-2xl mb-4">Discovery</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Complete your holistic profile. This assessment logs your KSAs (Knowledge, Skills, and Abilities) and triggers our AI engine to build your custom report.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-400 uppercase tracking-tighter font-semibold">
+                        <li>• Complete Digital Profile</li>
+                        <li>• Personal Journey Narrative</li>
+                        <li>• Talent & Gift Inventory</li>
+                    </ul>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card p-10 border border-gray-100 bg-[#f9f8f6] reveal" style="transition-delay: 200ms;">
+                    <span class="text-6xl font-serif text-[#c5a47e]/20 mb-6 block font-bold italic">02</span>
+                    <h3 class="text-2xl mb-4">Decision</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Review your AI-generated Playbook with a 3D Coach. Here, you transition from data to commitment by choosing your primary growth targets.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-400 uppercase tracking-tighter font-semibold">
+                        <li>• Professional Report Review</li>
+                        <li>• SMART/SMET Goal Locking</li>
+                        <li>• Strategic Action Plan</li>
+                    </ul>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card p-10 border border-gray-100 bg-[#f9f8f6] reveal" style="transition-delay: 300ms;">
+                    <span class="text-6xl font-serif text-[#c5a47e]/20 mb-6 block font-bold italic">03</span>
+                    <h3 class="text-2xl mb-4">Development</h3>
+                    <p class="text-gray-600 mb-6 text-sm leading-relaxed">
+                        Execute the "12-Week Adventure." Launch with the 48-Hour Sprint and use your Playbook to sustain momentum in Body, Mind, and Spirit.
+                    </p>
+                    <ul class="text-xs space-y-2 text-gray-400 uppercase tracking-tighter font-semibold">
+                        <li>• 48-Hour Sprint Launch</li>
+                        <li>• Lifelong Learning Prompts</li>
+                        <li>• Guided Accountability</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- AI Integration Section -->
+    <section id="ai-integration" class="py-24 bg-[#f1eeea]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="ai-badge">AI Integration</span>
+                        <h2 class="text-4xl serif">Intelligence in Stewardship</h2>
+                    </div>
+                    <p class="text-gray-600 mb-8 leading-relaxed">
+                        We don't just "take notes"—we build an engine for your growth. Our integration of AI transforms the typical coaching experience into a data-driven, personalized roadmap.
+                    </p>
+                    
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-sm shadow-sm border-t-2 border-blue-500">
+                            <h4 class="font-bold text-sm mb-2">Automated SMART/SMET Logic</h4>
+                            <p class="text-xs text-gray-500">Our AI takes your raw aspirations and calculates Specific, Measurable, and Evangelically-Timed targets, ensuring your 12-week adventure is grounded in reality.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-sm shadow-sm border-t-2 border-purple-500">
+                            <h4 class="font-bold text-sm mb-2">Personalized Synthesis</h4>
+                            <p class="text-xs text-gray-500">The Discovery Assessment posts to our AI model to correlate your unique KSA mix with professional benchmarks and biblical stewardship principles.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-sm shadow-sm border-t-2 border-accent">
+                            <h4 class="font-bold text-sm mb-2">Lifelong Learning Catalyst</h4>
+                            <p class="text-xs text-gray-500">Instead of static advice, your Playbook includes custom AI Learning Prompts designed to turn daily curiosity into technical and spiritual maturity.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-sm shadow-sm border-t-2 border-black">
+                            <h4 class="font-bold text-sm mb-2">Report Generation</h4>
+                            <p class="text-xs text-gray-500">Upon completion, the system generates a professional-grade 3D Strategy Report—the primary tool you and your coach will use to navigate your future.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal" style="transition-delay: 200ms;">
+                    <div class="bg-white p-8 rounded-sm shadow-2xl border border-black/5">
+                        <div class="flex items-center justify-between mb-6 border-b pb-4">
+                            <span class="text-xs font-bold uppercase tracking-widest">Growth Engine Interface</span>
+                            <span class="text-[10px] text-gray-400">Analysis In Progress...</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-4 bg-gray-100 rounded w-3/4"></div>
+                            <div class="h-2 bg-gray-50 rounded w-full"></div>
+                            <div class="p-4 bg-slate-900 text-green-400 font-mono text-[10px] rounded space-y-1">
+                                <p>> INITIALIZING KSA CORRELATION...</p>
+                                <p>> MAPPING SPIRITUAL GIFTS TO TECHNICAL SKILLS...</p>
+                                <p>> GENERATING 12-WEEK SMET TARGETS...</p>
+                                <p class="animate-pulse">> READY FOR COACH REVIEW</p>
+                            </div>
+                            <div class="h-20 bg-[#c5a47e]/5 border border-[#c5a47e]/20 rounded p-3">
+                                <span class="text-[10px] font-bold block mb-1 text-[#c5a47e]">DYNAMIC LEARNING PROMPT:</span>
+                                <p class="text-[11px] italic text-gray-600">"Act as a biblical scholar and help me understand how my analytical software engineering skills can be used to edify my church's mission outreach..."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Call to Action / Get Started Section -->
+    <section id="get-started" class="py-24 bg-white text-center">
+        <div class="max-w-4xl mx-auto px-6 reveal">
+            <h2 class="text-4xl mb-6">Ready to Build Your Building?</h2>
+            <p class="text-gray-600 mb-10 text-lg">
+                Your Discovery Assessment is the first step toward a personalized 3D Growth Playbook. This comprehensive report is the foundation for your coaching sessions and your lifelong action plan.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="p-8 bg-[#f9f8f6] border border-gray-100 rounded-sm text-left">
+                    <h4 class="font-bold mb-4">The Assessment</h4>
+                    <p class="text-sm text-gray-500 mb-6">Complete a deep-dive survey covering your Personality, Character, and 20+ specific Knowledge, Skills, and Ability markers.</p>
+                    <a href="way_page.html" class="text-xs font-bold text-[#c5a47e] hover:underline uppercase tracking-widest">Start For Free</a>
+                </div>
+                <div class="p-8 bg-[#1a1a1a] text-white rounded-sm text-left">
+                    <h4 class="font-bold mb-4">The AI Playbook</h4>
+                    <p class="text-sm text-gray-400 mb-6">Unlock your full report, custom SMET goal logic, and lifelong learning prompts to review with your assigned Coach.</p>
+                    <a href="way_page.html" class="text-xs font-bold text-[#c5a47e] hover:underline uppercase tracking-widest">Secure the Full Strategy</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <a href="way_page.html" class="bg-black text-white px-12 py-5 hover:bg-[#c5a47e] transition-colors font-bold text-lg rounded-sm shadow-xl inline-block">
+                    Begin Your Discovery Assessment
+                </a>
+                <p class="mt-6 text-xs text-gray-400 uppercase tracking-widest">No credit card required to start discovery phase</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 px-6 bg-white">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-24">
+            <div class="reveal">
+                <h2 class="text-5xl serif mb-8">Ready to start?</h2>
+                <p class="text-gray-600 mb-12">We are currently finalizing our offerings, but if you would like to learn more now, please contact us to see if we're a good fit for your growth journey.</p>
+                
+                <div class="space-y-6"> 
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 border border-accent flex items-center justify-center rounded-full text-accent">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        </div>
+                        <span class="text-sm font-medium">discover@3dlifestrategies.org</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 border border-accent flex items-center justify-center rounded-full text-accent">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        </div>
+                        <span class="text-sm font-medium">USA | Remote Globally</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal">                
+                <form id="contactForm" class="space-y-6">
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-400">First Name</label>
+                            <input name="firstName" type="text" class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black transition-colors" required>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase tracking-widest text-gray-400">Last Name</label>
+                            <input name="lastName" type="text" class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black transition-colors" required>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Email Address</label>
+                        <input name="email" type="email" class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black transition-colors" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Subject</label>
+                        <select name="subject" class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black bg-transparent transition-colors">
+                            <option>Learn More</option>                            
+                            <option>Early Acess Interest</option>                            
+                            <option>Partner Support</option>                        
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase tracking-widest text-gray-400">Message</label>
+                        <textarea name="message" rows="4" class="w-full border-b border-gray-200 py-2 focus:outline-none focus:border-black transition-colors" required></textarea>
+                    </div>
+                    <button type="submit" id="submitBtn" class="w-full py-4 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-all">                    
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>    
+
+    <!-- Footer -->
+    <footer class="py-20 bg-[#f9f8f6] border-t border-black/5">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <span class="text-2xl font-bold tracking-tighter serif mb-6 block">3D <span class="text-[#c5a47e]">Life Strategies</span></span>
+                <p class="text-gray-500 max-w-sm mb-6">Empowering individuals to realize their God-given gifts through strategic development and holistic stewardship.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest mb-6">Philosophy</h4>
+                <ul class="text-sm text-gray-500 space-y-4">
+                    <li><a href="#" class="hover:text-black transition-colors">The Theology of Action</a></li>
+                    <li><a href="#" class="hover:text-black transition-colors">Talent vs. Spiritual Gift</a></li>
+                    <li><a href="#" class="hover:text-black transition-colors">Overcoming Inaction</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest mb-6">Connect</h4>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-400 hover:text-black transition-colors">Instagram</a>
+                    <a href="#" class="text-gray-400 hover:text-black transition-colors">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-black/5 text-center text-xs text-gray-400">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAAAjCAYAAABiv6+AAAAW/0lEQVR4nO1bCVhV1dpea6+9zwzIPIiglAODKCLigBJRKiiW1qFUtGsDppmm5pBmx1OpmZrlRM5maQmo5UXNIScEUQG9CU4YjiAyeuCMe1r/s/Y5cAmH9F77//s/t+95toe9pr3Wer9vfdMSgMckjDEEsTqa/E0BAKZ9eaL9kKn7+q37scBPhu5pLrWNjdXROp2ONIeP+73/NnqMDcIQaDMokJEskE4LvskP2HHkxvu3a6yjBEFoJaOpSoWM/tVFQ5/2dlPl9In0OvPRa93LWQ4D3HwYbTrSAgBCQoqxXq8X/4Q1/RcAok1HBAjy5+H8Mo8Pvz71blm19V0zT7uKnAVAgAGGCECKARSFAKJEQAOuXqWgLjqpmFw3F0V2TKT/mXlvRl61scLvAfqLHh0QrTYdZTiAwBgrnp2w+62bFcZpDTbURuAsgAKiACB0HEWY7LMIAMQYYwpDRAFIAwrRAEERyCBnkcvRebWCyfN2V52IDm11csG4PldY/i94/hAQnQ5Tev1cAIBeJDpj8NS9I0puNMyst1FhPGcDFOYFAIkKgQ8BlAAEyZFEAIIYUAgQCUIIICAACgLg7ULvKfj25SQIIUEFP3is/x4i3N1EdsWrRXo9FGVIL740fV9C6PCM7MIS43e1JiFMYE0CBXgMIEQPB4OQVE/UPA0hRAhikcI2VuTMQMAUQAhWaFTMPjsQj4QFjAWAdoyJHEbCPeWN32xWf781t5w7eW8a7zGfJ0qwpZ6gIQB/+2h/z5Mlhlm1DXySjSd8bhOhff8ftMiHEQYYiyKAiGJUQIk4g5+7alXqQN9lY5KjKxxz+CNEYGMbiqKAKDbZAr/rS+YovUin57319+l/TzkZg/yN/znGQ8v/JEAIN+nFmcuPdThYUDO7osY83CbQDBAs/w4QZGMEAgSklUBFCyZvd/nX+794dp6ve6s6i6SZAATadMly+4M5YowxE9c3drrJbIxSqzQ3I6Ii1yxduvTc+PHjn7588eIIm9XqLQiCF8BAoVDI8+P6Pv/dnHlzfmvGdGQMRb/eMdv8/HxWbtu+fX9qZCSzpqCA0w4dOrCi4s74Y7k5L/SPj592u/z2C5BYJ1JnqOgRHaW/fu1aaHl5xSAKURCLGNA0krcLavfhzl27dmu1WpSRkfGwNTwyUUCnoyioFxMnZr3x/aHy09cq+dEWDhAwpEXYFTUWmrPdIwGBMcBIhVRyhvN3R2tHxAd0P7m+r37glENvBmozTz37zu63yQY5wIAP9HkAAEuWLHHrFRWdy7K2lziO73Dz5o0JR345tG+RTuflxDD8ndsVM8tu3hrPWm2hAW0CDpWX356b+eO2UxMnTgwnw8TGxkqbe+PGDaXR2DDEYrGESu8GT4nRGozGYKPRmETmUVdbN5Bm6Lbu7m5rZXLZJpVSvi48IuJCbe3d4XKFXOPs4rxGrpRvUilVaxRq9WXSPyMj44mJCg30ejFp2p7EwhLTOpOFByrGZlIqmessRwdymFGT814UBIAxByAWiMQQgBxnbks9ggWMAQWQEikQD9ycqS19w1t/sXpGbGHRFgiOF+3cdsugTDabjcBgNEZ1eiV9UuLkrMUHlg9Zz/HEvZGU+z24XLp0SePq7p6x78C+z2fNmhWxbcvWfKvF4ltWVeX5VVpacUTnLoUUhaKdnJ0ytu3IXNq9a7f42prqQWfz81MhhBOMRqM0T1EUyfg2SFG25h+gELJhskA7A3IaJ6dzR7Kz1zfWnz57FkR0DqdcXVyPHzx6eENjee7pk01zfFKAUIQLL12vn2K2iVgtA+Y+YT7DLmcO7/r20NCwiKedhgV4UJ+7O4FstQzUymQKCtIqGlMKJAJasm8BADx5MMYiKZfJ5NDbBf30fA+/vue3vpyyckZsIQ/S0YvDtqHl46Nf7xYIUzw0YpEg8KDawHY6e5VfF/la5keQgKFN/52v77C+wJo1a278vP/nz1NSUsL379n7IUVRrI+vz9dLV648v3TpUm+bzdaJQhSt1mgu9evXj8ZYZACE2Gy2tCZHbkFBQdOGYYwRMf/uI4lN3xYFwenAgQMuqampLrGxsTTP8xKzcALv+tnq1S4jR450JuV/hlIngzJWG9caYhpSFOSn/S2sEEJIuOWa49kpowFYt+2K10+nf+taXmWObjCJMSYr7MwKMl8BMzSRVwYKwFWDDnV72v3zH+Y/u69IOlG1SKdLx3o9FDIyiGgDMwBgi0oGtnRO2bH2aoVtDGsxwRoD1IoYf2qXvt8TOZ9LS0upkA4dev926fLG2tradq1btz73kV4/jwCW8mpKOM9z7gSkwKCg/BUrVgiRXbr4E15hZAz7mPuBaEQba6trY6dOei+vlatr8dHj2ckymQxHdO7SUFFRkfj9V8vyPDw9jh4/fvxth259oua6FJMSRChCSgRmm+ic8lHO3pTZB+akL3z+Z5bwfohOxp4PFUa/9HQlAGA/eRgKgFMFV1st2nE19Hq5oaeVAwHebpr9v6xI2F1M+gAdpdWGQuJU6vXQ4WAW40a/JmHy3sG/3WzoBkQBYggoRCG5Yy4sINzqkAxCDmUpFBQUHM3bs6frBwsWLrhx/dr4qZPe24kxjo6Pi+smCALQODmVrlixonTmzJltrFZbIAUhVGs0xcQSioyMhAUFBU2LxqJIEaAtpRbJfD6Vl9dYJfACr27l5vpraHjnEXV1ddIxRqRMxKLa09PjqK+//xRBEKzDhg0jivyJm1kSIHbRgwACQahpELof+kf13o6vZGZFdfJctPmj2GPSHsfq6MiOfrDgUjnmjgIxIqLdXQBAjuNpJKjVplMECCIRjQ4meWcQAMkz9/XvPCJzZq1RiON4EUDACwAw9zXhMCb7APGCBQtcs48efRdR1I3ohIRvXFevzim7hcaazObI4uJiL6OhQVLcCoW8CELID05ISGRZVkkzDBsWHr794KFDICgoSGwGCJYplSYH0OasgiyQOHCgw3ixrwEhqn7Dxg1XiDVFJiGTyciEkEKmuJWRkXHpSYNwP0Aa5wIhZkWOw7Cijhq8/1TZ4NARmT/EhfssWTEjJr/gKGmTjnS6YjB3LobJyRlURmWxdI5qvUKxHYhkgXCdXh8KyVEl+TWfHul7srhq2uFfa5I4ngJAtDrM6Qc7l8nJyQQn4eLFix2v/laqd5jf28vKynsJoohaOTsXhoaGmkwWcyQWReju5nEmMzMzcO6Hcz6EEFL+/m1WLlu2rJgcK+np6dL3TCYT0ZlMzZ2qqGdinvkNC7yTf1BgSV1NneRMkg9gUVSIoigXBZEImTQHyb/BABlNDSH9+/ePa2hokCloBQ4OCvh11TffPKov9UhEFLMsYMiWs1aBCoYiR7iE+r3FpIJKmhM8XBSbEnv6LVnwTq8LdvWQjkC6lnhMzRUmhDCDAiBZICt8d+HRbofPVU+tMVhH2AQaAMGCifQTJnR0EQVAU97OqKR42ythEMLmR5aEwK5du5QL589fUX/XoHVzdy+sqq7uq1Gr82P7xozyDQys37R+Qxlrs9mcnJ3vsCzrb7NakZ9/67RfDh+e7NCFku1BWO3OnTuaIYmDdhsMhjY0w3AYY5W3t8+Otm3b7T9/vuiTogvnu3UJC18plzP0kezssaIoknmKNE3jPj17b6q8UxFLI5oTsQhphpG3bRs4+aesrO1P0g95CCBNuyyIACBIq4Ca5i1ebop1Q/v5fjFrTK9rDiQc3EEsFYjJCqYvy+m073TF5CqDdYxVYBjMmzGRC3vI5Xf0MECaiKZpMGHChNCSixe7+ni3vrZu07o8CKGQmpqq4jius5+fX/Wtq1edGkympzqGhFxYuHDh+Qd50STw6bCoGkHnKYrCokiECGJE05LLRfRSi37QIUVNc0MI8U/aW/9jQFqGP2glUMuEu95uqhVTtE8tTR4YVms/ovTi8q0Fflt+uTX9do3pLQtHq0SeRIQxiQjfm7p6DECAfU7iI5Q1r/t/GbBsoUMeSGSTEEUWyJvFBh62MvGKD/Wbip87e/b2c127fm1J/7nITbfh3KFqs6wj5jhAAVagpDP4gWA8DonkWCBM6erqin19fQXCAIQRsrKykEajwcT5C7IEwUrPSvHIkSMC0UEhISH4/PnzkPw2S4bZdZ5WSzWWE78k2fFO2pN6Rx3W6XSwsayRGnVSY13L8Um54x02fodUkLYOy0ySzsb+jvHw40jIPRskYoAZBNEzUV7B3+sHXhw8ZU9MwWVDNs/ZeBLdfUSn6VElBD4Bbn+YRD2J8R5njvdrK5U9qoTcM6BkgUBgM5ntMS6WE0ViBzjO5yfpwcLGnMrwl1/uWlNfrxo6dGjJhAkTKgcPGND9rsGgVCmVVhFjyHGcwsvdvaLvc8+VH9y7N8RQX08jiqIGJiVdnzZt2k2HHpD8iuRhw55xc3a+kbZxY2lqaqrv1ZKS9lgUWUal4q1Go0wul1ODX3zx7JkzZ3xKS0u9pL48AAoFDdu1b1+clpZWt33zZq+1mzd3CHzqqdr169ef53keTJ482c1gMPht3LixaOrUqT5FRUVtrUYjAjQNoACRr6fvra07tpYSQRiWlNSF4zh69BtvXEpOTq4li/1XAbETbrnxkm36xM5tnV034a8++8o/OrL7TpZliRTZ1qxKk30wbdrggwd/mWUymYIr+SpvCKGVpul6CGFm4enCk5dLrnwHKeoqTdPO327c5NQ/Pn7S/kOHviaacPbs2e13pmceVmvUP0OKSqgsqxh8506lThAEEibxphmmnChsk8mUcragcJnZZOpII3SbWF20TMZ4eXoOHZGc7PzJosWZJLpQVlau6RkVtSM7N3fEwP79tTXV1Ss1Gg1dcPL0B3fuVExECJUShqEgVAHAf7ls0aJtURHdfhZ4vrUIgLBw/nww5Z0pUV+s/OLyvwfIn0x6vZ4cC3zmTz9Mtlqt7VLHj+ukBmrbT/t29Kutry/Jyz89AAAg69k96qxMLi88lnN8DBHWpIGDJkAIalakrerW0NBAz//44/m3bpUtzj52bEtMTIzxVG4eCaMDG8tGrlyxwmvcuHHrS0pKNi/49NMXzpw5u23M6FHPtw8N/S0hIUH8/rst/m3aBKRNeG/inJycHCYoKIibOGmSueNTT5fI5LITm7/7LuWzefP6nPv13E+jhg/fRCNkFHkBIYSAxWJy1jhpSk7m50fMnTtXCsjOmz+/3mS2/kCkaeqM6e2vXLmC/nG6sK8MyGrImv+jAWkkUQTOGAP2nXfeMUAISYQgnZSnpaUBhmEskV26CoKIOSIlpHxwYiIRXj4+Pv4uMUuHJw/f/us/zrxx4MABhpi4lZWVr7T2b7O9qvJOj7//+OPA8ePHbyZR4NEjR1qlMAnPmxMTE0kEGEmeOiOrGzJkCInDSYQxduoW3iXA29v385CQkBoI4a74uLj3EZST2J8f0YEOEw8ihFiaYUwCL8U7pEQXwKILxtiWkpJS55jz9wD8XaqXFDhJXYD/M3pwnkWn00mWSq/oqOUIQWVYx07Vz/brt2rp0qVtHU0Qy7LEAiC+NDFQ7Nk0ihKAKKr69enz0otJLw67eKFosUqtOjF37ty6OXPm+Imi0LND+45fYozP1NTUvEQygQ5dJVmEFqu1MZKLIIDWiqqKZ/r06DEhKSHpeVJ+8+ZNBpKP8CyzaNEi9YABA0ISBg3a+O22by/ygqBszCqSgKfZbPGO6dHz3bh+/Ubv2bNHTuo6d+66UBTFTmGdQqrjY+M+27p1q7djPVJoACMKyInVRIJZ4H+XBAAoKIgkASZ9mwTUmqjRlFy8fNmvySNGRLl7ei27fbti7DcbNuZ88skn7YjwKJXKJkAJ9zt+SYJMXV/fMPHSheLtMrnCkDpu3EvEtMzLzklECNWvXr/6uKeXzxbOxvYTBEFtZ2i7hU4882aOI2c1W9qaLLb+vMiGNNORSEbLjKeyc+Mrbt3K2rB2Xfmr2lcHy2Wyu7Ax1oKQwLGs2tBgeJ5luZiEhASp74bNG44kDkmKbOXqsvV2efmMJQs/P7xlyxYPae6IglwbX81mpVwORcAwJK/xhM3D+xGJ+ooilDEqOQ38PVWrKAgFoNUSv6WlxEjyO2vWrCvHcrKnvPn22I48x7nu37Mn5UHixXGcHFFU3fnLl2JJho9jWbc333yzmtTdNdxN5FiW6hbedU5dXfVAluNajRo+KlqaFBRbmvwCBtgpMLDtd2fP/WPI3n37viJAODs7E3HkeZFXAjn985i33ooGGNvu3r3rQVGUfe8gJPNQurg4X7tQcnlITt4Jkiwj5xaJp4GFCxeeyz15MnXQoIQoq9UavGHthkFkPRTR/nlrX/w4uoMm0cuFzqVlSkqEDOkk/AnAECAEEcoohlFQvq70wWfCWz1zdPULy8lVO3BvPEhitsQBicMmTZoUDCkKzP5w9hWaoatYlnduxIuEd3CzXAoFoYgh5C1mM0weOuJjnueDn4uLG6tUKYHFYomhEDphsVr8RQGzEMLq6zeuDbFvP8mMYvth30hYCi5KYzsCnIKPj08dy3EWq83WOjMzk33ttdd4hJCzQsFUEjl37B35JfNofjNQyrgmDhgwXKfTBZCCtHXr8hGFjKzV6kTeacKRJBK+/fMBexUytDd+wt9HXrnZMN1gVYc/+h2sPyJJS4kiZBAjkwEXJT4ZHKBZuOfLxJ3npOXb42DgXiJHNa6vrxt9+MDBIf16995pNpnb2Vibd/fIHt+fLDgNSaYRQugCMVb/83NQRkHYiqzv/Tnvl/Xt1eubqqqq+W+Neav2yOFfPD94f+obw19//SZpGtOzN9/QUP86Qug9nseQoWkaIdS4VgpCQF+/fu3trmGduwiCwDAMg/o/Fz85N+/UyurKqjkxvXoFx/WNjaQRXZW2Zs2xUSNH/o0MQQaQ0TLKYLgbFhYcvJ3jOKKPZJ1CgtNv3bg5+seMzLV9e/fJMhobIrCIuWcHPJeVnZcj6RBpCSSJZGUFsPuLxC0X05OjOweoJrio6WuQUSMRI3ImEtTx4wNBgpM0pGRq5OpEXwwPUo65sE3bZ+fixJ02XsqfkDteDxoXC4IAs3NzX/Ft7TeuwVBvRjTK7dunT++Va1cVEsBYlgWeXj7TvTx9VjUqU18vj91BTwWNd6SWYWR09Gx/f//3BM5a7OffeuyrY8aUOyxMul1gm5X+/q2nk76uHq4nPT08J2nc3Uk9Ic7H1+c9ikLrIKQu0TQqQjRTdLWsTMjLPzUrMKDNWGOD0aZ2Uu9IfCGpj7e3t9HNw+Owh5cnyeODNgH+61Rq1UeiKF5EiC6maaa4rtZQcTzvxEBPL29dQ309r1Sodg9KGNJHr9cTC+0+HnWze7y5RTfcpn91dlxZtek9E4s8RN7quD5KkR2kaAqwUaGe4bsWJVzq/25W73Olhhye5yRP2B6MpBDFKIFGLtxq46leciStxzoIvY0tr6n+iwT/A4OH/86cpL73xq2kTSI33dNR77CA2py1Q+Z9MCwk4mkf+VcqBW0CtAqRfIAkMRCKFJIsEgAp6UYHOWsFkmgDjBpplExdB1/Zp19O6Bpx9OukLyUw7BcZpPTu40xWaw8u0s1uJTYtnNS1uKnY2P5376SN43JCc2peBlvWN/9us6cxQHm/OTWNp7O7FS37SjcnHW3uWc9D9YKUcEq2/xcE0mPWyhPBe09VzLhTaxplE+UUAjbQo5Nb6K4lieefn5TV71yp5aggYKCkOdbHXblOGxe0eProrlfxAxJaf9G/SHaHy35Fh/wz9rOjPYKT07d30n5/fPGWfMl+nvFldkBH7Q+FYcMzNs9Yntu5iV0JEA6H7S96wmQXLTswJFcuIzcXWgD3zxKSe3/ghee/CNyf/gdFFmjLaytD5gAAAABJRU5ErkJggg==" alt="Small Image"> &copy; 2026 Built for Stewardship.
+        </div>
+    </footer>
+
+<div id="successMessage" class="hidden fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div class="text-center">
+        <h2 class="text-2xl font-light tracking-widest uppercase">Thank You</h2>
+        <p class="text-gray-500 mt-2">Your inquiry has been sent successfully.</p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Stop the page from reloading
+
+    const submitBtn = document.getElementById('submitBtn');
+    const successDiv = document.getElementById('successMessage');
+    
+    // Change button text to show progress
+    submitBtn.innerText = "SENDING...";
+    submitBtn.disabled = true;
+
+    // Collect Form Data
+    const formData = new FormData(this);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        // Send to your Node.js server
+        // const response = await fetch('http://localhost:3000/send-inquiry', {
+        const response = await fetch('https://3dlifestrategies.org/api/send-inquiry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            // 1. Show the success div
+            successDiv.classList.remove('hidden');
+
+	  // 2. Hide it after 5 seconds
+	    setTimeout(() => {
+        	successDiv.classList.add('hidden');
+	        submitBtn.innerText = "SEND INQUIRY";
+	        submitBtn.disabled = false;
+	        this.reset(); // optional: clear the form
+	      // OR   window.location.href = '/'; 
+	    }, 5000);
+            
+        } else {
+            alert("Something went wrong. Please try again.");
+            submitBtn.innerText = "SEND INQUIRY";
+            submitBtn.disabled = false;
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Could not connect to the mail server.");
+        submitBtn.innerText = "SEND INQUIRY";
+        submitBtn.disabled = false;
+    }
+});
+</script>
+
+    <script>
+        // Scroll Reveal Animation
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Smooth Scroll handling for internal navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

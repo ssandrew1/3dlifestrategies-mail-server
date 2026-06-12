@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMART vs. SMET Goals</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: #111111;
+    color: #e8e0d4;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .email-wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 24px 60px;
+    background-color: #111111;
+  }
+
+  .brand-header {
+    border-bottom: 1px solid #2e2e2e;
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #c8a96e;
+  }
+
+  .brand-tagline {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #555555;
+    font-weight: 300;
+  }
+
+  .issue-line {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #444444;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .salutation {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    color: #e8e0d4;
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .deck {
+    font-size: 15px;
+    color: #888880;
+    font-style: italic;
+    margin-bottom: 40px;
+    letter-spacing: 0.01em;
+    border-left: 2px solid #c8a96e;
+    padding-left: 16px;
+  }
+
+  p {
+    color: #c8c4bc;
+    margin-bottom: 22px;
+    font-weight: 300;
+  }
+
+  p strong {
+    color: #e8e0d4;
+    font-weight: 600;
+  }
+
+  .callout-block {
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid #c8a96e;
+    background-color: #181818;
+    padding: 24px 28px;
+    margin: 36px 0;
+  }
+
+  .callout-block p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #b8b4ac;
+  }
+
+  .callout-block p + p {
+    margin-top: 14px;
+  }
+
+  .callout-label {
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-bottom: 14px;
+    font-weight: 400;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 36px 0;
+    font-size: 15px;
+  }
+
+  .comparison-table thead tr {
+    border-bottom: 1px solid #333;
+  }
+
+  .comparison-table th {
+    text-align: left;
+    padding: 10px 16px 14px 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888880;
+  }
+
+  .comparison-table th.gold {
+    color: #c8a96e;
+  }
+
+  .comparison-table td {
+    padding: 12px 16px 12px 0;
+    vertical-align: top;
+    color: #b0aca4;
+    border-bottom: 1px solid #1e1e1e;
+    line-height: 1.5;
+  }
+
+  .comparison-table td:first-child {
+    color: #888880;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    width: 18%;
+    padding-top: 16px;
+  }
+
+  .comparison-table .smart-col {
+    width: 38%;
+    padding-right: 24px;
+  }
+
+  .comparison-table .smet-col {
+    width: 38%;
+    color: #e8e0d4;
+  }
+
+  .pull-quote {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 40px 0;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+  }
+
+  .pull-quote p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    line-height: 1.45;
+    color: #e8e0d4;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .pull-quote .attribution {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c8a96e;
+    margin-top: 18px;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: normal;
+  }
+
+  .cta-block {
+    background-color: #181818;
+    border: 1px solid #2a2a2a;
+    padding: 32px 32px;
+    margin: 44px 0 32px;
+    text-align: center;
+  }
+
+  .cta-block p {
+    font-size: 15px;
+    color: #a8a4a0;
+    margin-bottom: 22px;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background-color: #c8a96e;
+    color: #111111;
+    text-decoration: none;
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 13px 32px;
+    border: none;
+  }
+
+  .sign-off {
+    margin-top: 44px;
+    padding-top: 32px;
+    border-top: 1px solid #1e1e1e;
+  }
+
+  .sign-off p {
+    font-size: 16px;
+    color: #c8c4bc;
+    margin-bottom: 6px;
+  }
+
+  .sign-off .name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 18px;
+    color: #e8e0d4;
+    font-weight: 700;
+    margin-top: 16px;
+  }
+
+  .sign-off .title {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555555;
+    margin-top: 4px;
+  }
+
+  .footer {
+    margin-top: 52px;
+    padding-top: 24px;
+    border-top: 1px solid #1e1e1e;
+    text-align: center;
+  }
+
+  .footer p {
+    font-size: 11px;
+    color: #404040;
+    letter-spacing: 0.04em;
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+
+  .footer a {
+    color: #666660;
+    text-decoration: none;
+  }
+
+  .footer .logo-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 14px;
+    color: #333330;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  em {
+    font-style: italic;
+    color: #d0ccc4;
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- Header -->
+  <div class="brand-header">
+    <span class="brand-name">3D Life Strategies</span>
+    <span class="brand-tagline">Body · Work · Money · People</span>
+  </div>
+
+  <div class="issue-line">Clarity Series &nbsp;&nbsp;·&nbsp;&nbsp; Goals &amp; Execution</div>
+
+  <!-- Salutation -->
+  <p class="salutation">Hi Steve,</p>
+
+  <!-- Headline -->
+  <h1>SMART vs. SMET Goals</h1>
+  <p class="deck">One framework gets you organized. The other gets you <em>moving</em>. Most people are using the wrong one.</p>
+
+  <!-- Body -->
+  <p>You've heard of SMART goals. Specific, Measurable, Achievable, Relevant, Time-bound. The framework is everywhere — corporate retreats, productivity books, every January blog post about resolutions. It's clean. It's logical. It checks boxes.</p>
+
+  <p>And for a lot of people, it quietly fails. Not because SMART is wrong, but because it's <strong>incomplete for people in the middle of a rebuild.</strong></p>
+
+  <p>When you're forty-five and recalibrating — your body, your work, your money, the people you're spending your days with — a well-formatted goal sheet isn't the bottleneck. The bottleneck is something older and harder to name.</p>
+
+  <div class="pull-quote">
+    <p>"You can write the most precise goal in the world and still not move an inch. The missing variable isn't structure. It's stakes."</p>
+    <div class="attribution">3D Life Strategies</div>
+  </div>
+
+  <p>This is where <strong>SMET</strong> comes in. Not a replacement — a layer underneath. SMET is what gives SMART goals their gravity.</p>
+
+  <!-- SMET breakdown callout -->
+  <div class="callout-block">
+    <div class="callout-label">The SMET Framework</div>
+    <p><strong style="color:#c8a96e;">S — Stakes.</strong> What actually happens if you don't do this? Not abstractly. Concretely. Write it down in a sentence that makes you uncomfortable.</p>
+    <p><strong style="color:#c8a96e;">M — Momentum Trigger.</strong> What is the single smallest action that starts the chain? Not a plan. A trigger. Something that takes under two minutes and leaves a mark.</p>
+    <p><strong style="color:#c8a96e;">E — Evidence Gate.</strong> How will you know — not feel, know — that progress is real? One number. One observable fact. Something that doesn't require you to interpret your own mood.</p>
+    <p><strong style="color:#c8a96e;">T — Tension Point.</strong> Where does this goal collide with who you were? Every meaningful change has friction built in. Name the specific moment where old behavior will try to reassert itself.</p>
+  </div>
+
+  <!-- Comparison table -->
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>SMART Goal</th>
+        <th class="gold">+ SMET Layer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Body</td>
+        <td class="smart-col">Sleep 7 hours per night for 30 days, tracked in an app.</td>
+        <td class="smet-col">If I miss this, I lose an hour of cognitive function the next day — I've measured it. My trigger: phone charger leaves the bedroom tonight. My evidence gate: 85% sleep score, not "I feel better." My tension point: the 11pm scroll habit.</td>
+      </tr>
+      <tr>
+        <td>Work</td>
+        <td class="smart-col">Complete one deep-work session of 90 minutes daily by Q3.</td>
+        <td class="smet-col">Without this, I keep producing noise instead of compound work. Trigger: calendar block named "Compounding" — already done. Evidence gate: one deliverable per week that didn't exist before. Tension: email as avoidance.</td>
+      </tr>
+      <tr>
+        <td>Money</td>
+        <td class="smart-col">Automate $500/month to investment account starting June 1.</td>
+        <td class="smet-col">Not doing this costs me $180K over 20 years at 7%. Trigger: one transfer set up right now — not scheduled. Evidence: the transaction confirmation in my inbox. Tension: the part of me that conflates spending with reward.</td>
+      </tr>
+      <tr>
+        <td>People</td>
+        <td class="smart-col">Have a 20-minute, screen-free conversation with my partner three times per week.</td>
+        <td class="smet-col">Without this, I accumulate relational debt that doesn't show up on any dashboard until it's expensive. Trigger: I put my phone in the kitchen drawer when I get home. Evidence: I can name something specific they said last night. Tension: the exhaustion that makes presence feel like a cost.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Notice what SMET does. It forces you to locate the <em>animal</em> underneath the goal — the real thing at risk, the real behavior in the way. SMART tells you what to do. SMET tells you why you haven't done it already, and what to do about that.</p>
+
+  <p>Most midlife rebuilds stall at the SMART level. The goals are solid. The spreadsheet is clean. The motivation lasts ten days. Then the tension point arrives unannounced — Tuesday night, slightly beaten, inbox still full — and the old behavior wins. Not because you're undisciplined. Because you never named the tension. You can't navigate around an obstacle you haven't acknowledged.</p>
+
+  <p><strong>One exercise for this week.</strong> Take a goal you've restarted at least twice. Apply the SMET layer. Write the Stakes sentence first — the uncomfortable one. Then find the Momentum Trigger: the action under two minutes that changes the state of play. Do that action before you go to bed tonight. Not tomorrow. Tonight.</p>
+
+  <p>The goal won't feel different in the morning. But something will have shifted. You'll have proven to yourself that this iteration is structurally different from the last one.</p>
+
+  <p>That's the compound interest of rebuilt identity. It pays slowly, then all at once.</p>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>We work through exactly this inside the 90-day program — all four domains, one weekly cadence, the SMET layer applied where it matters most. If you're ready to put instruments on the rebuild, the link is below.</p>
+    <a href="https://3dlifestrategies.org" class="cta-button">See the 90-Day Structure →</a>
+  </div>
+
+  <!-- Sign off -->
+  <div class="sign-off">
+    <p>More next week.</p>
+    <p class="name">The 3D Life Team</p>
+    <p class="title">3D Life Strategies &nbsp;·&nbsp; 3dlifestrategies.org</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="logo-line">3D Life Strategies</div>
+    <p>
+      You're receiving this because you opted in at <a href="https://3dlifestrategies.org">3dlifestrategies.org</a>.<br>
+      <a href="#">Unsubscribe</a> &nbsp;·&nbsp; <a href="#">View in browser</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
+
+

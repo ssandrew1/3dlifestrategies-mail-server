@@ -1,0 +1,64 @@
+#!/usr/bin/env node
+const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+
+// Configure CLI arguments
+const argv = yargs(hideBin(process.argv))
+    .usage('Usage: $0 <email> [options]')
+    .option('s', { alias: 'subject', type: 'string', description: 'Subject of the email', default: 'System Notification' })
+    .option('m', { alias: 'message', type: 'string', description: 'Body text' })
+    .option('a', { alias: 'attach', type: 'string', description: 'Path to attachment' })
+    .demandCommand(1, 'You must provide a recipient email address.')
+    .argv;
+
+const recipient = argv._[0];
+
+// SMTP Configuration (Matched to your working server)
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {        
+        user: 'steve.andrew@3dlifestrategies.org', 
+	pass: 'ajqenueirlzjpvdc'
+    }
+});
+
+const mailOptions = {
+    from: `"System Mailer" <support@3dlifestrategies.org>`,
+    to: recipient,
+    subject: argv.subject,
+    text: argv.message || `Automated notification sent at ${new Date().toISOString()}`,
+    attachments: []
+};
+
+// Handle Attachment Logic
+if (argv.attach) {
+    if (fs.existsSync(argv.attach)) {
+        mailOptions.attachments.push({
+            filename: path.basename(argv.attach),
+            path: path.resolve(argv.attach)
+        });
+        
+        // If it's HTML, also set it as the html body for nice rendering
+        if (argv.attach.endsWith('.html')) {
+            mailOptions.html = fs.readFileSync(argv.attach, 'utf-8');
+        }
+    } else {
+        console.error(`Error: Attachment file not found: ${argv.attach}`);
+        process.exit(1);
+    }
+}
+
+// Send Mail
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.error('Failed to send:', error.message);
+        process.exit(1);
+    }
+    console.log('Email sent successfully:', info.response);
+});
+
