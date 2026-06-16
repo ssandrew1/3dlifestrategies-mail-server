@@ -18,35 +18,42 @@ Yes, PM2 is exactly what you need! Here's the full setup:
 
 Install & Start with PM2
 bash
+```
 npm install -g pm2 – did this.
 # Start your app (adjust path/filename to yours)
 pm2 start /path/to/your/server.js --name "3dlife-api"
 # Verify it's running
 pm2 status
+```
 ________________________________________
 
 
 Make it survive reboots
 bash
+```
 pm2 save                  # saves current process list
 pm2 startup               # generates a systemd startup command
 pm2 startup will print a command like:
 bash
 sudo env PATH=... pm2 startup systemd -u ssandrew --hp /home/ssandrew
+```
 Copy and run that exact command it gives you — it's unique to your system.
 ________________________________________
 
 Useful PM2 commands to know
 bash
+```
 pm2 status                # see if app is running
 pm2 logs 3dlife-api       # view live logs
 pm2 restart 3dlife-api    # restart after code changes
 pm2 stop 3dlife-api       # stop it
+```
 ________________________________________
 
 Then safely log out
 bash
 exit
+
 PM2 runs as a background system service, so your Node app keeps running indefinitely — through logouts, crashes, and server reboots. 🟢
 
 
