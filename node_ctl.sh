@@ -19,7 +19,7 @@ start_node()
   echo "Starting support mail"
 # node  web_mail_node.js
 # nohup node web_mail_node.js > web_mail_node.log 2>&1 &
-  nohup node server.js > server.log 2>&1 &
+  nohup node server_new.js > server.log 2>&1 &
 }
 
 if [ "${1}" == "" ];then
